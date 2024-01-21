@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "greet-app.fullname" . }}-test-connection"
+  labels:
+    {{- include "greet-app.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: greet:latest
+      command: ['wget']
+      args: ['{{ include "greet-app.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

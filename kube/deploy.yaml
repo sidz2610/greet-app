@@ -1,0 +1,55 @@
+# greet-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greet-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: greet
+  template:
+    metadata:
+      labels:
+        app: greet
+    spec:
+      containers:
+      - name: greet
+        image: greet-app/greet:latest
+        ports:
+        - containerPort: 8080
+
+---
+
+# greet-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: greet-service
+spec:
+  selector:
+    app: greet
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+
+# greet-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: greet-ingress
+spec:
+  rules:
+  - host: greeting-api.acme.co
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: greet-service
+            port:
+              number: 80
