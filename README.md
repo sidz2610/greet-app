@@ -12,14 +12,27 @@
 5. To change name in greeting, send a POST request
 
 ```
-curl -X POST -H "Content-Type: application/json" -d "{\"name\": \"Ben\"}" http://localhost:8080
+curl -X POST -H "Content-Type: application/json" -d "{\"name\": \"Sid\"}" http://localhost:8080
 ```
 
 ## Containerization
 - Use the provided Dockerfile to build a Docker image.
 
+## Infrastructure Provision
+- Use the provided Terraform configuration to provision infrastructure on AWS.
+```
+cd infra/
+terraform init
+terraform plan
+terraform apply --auto-approve
+```
+
+## CICD JOB Setup
+- Jenkins(Dashboard) > Create New Job > Configure > Pipeline > Jenkinsfile.
+
 ## Kubernetes Deployment
 - Apply the provided Kubernetes YAML files for deployment, service, and ingress.
+- Apply the kubernetes deployment: `kubectl apply -f kube/deploy.yaml `
 
 ## Helm Chart for Kubernetes Deployment
 - Modify values.yaml as needed.
